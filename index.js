@@ -4,6 +4,8 @@ const port = process.env.PORT || 3977;
 
 const { API_VERSION, IP_SERVER, PORT_DB } = require("./config");
 
+mongoose.set("useFindAndModify", false);
+
 mongoose.connect(`mongodb://${IP_SERVER}:${PORT_DB}/bdblogweb`, { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
     if (err) {
         throw err;

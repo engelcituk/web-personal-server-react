@@ -55,6 +55,8 @@ function singIn(req, res) {
                 bcrypt.compare(password, userStored.password, (err, check) => {
                     if (err) {
                         res.status(500).send({ ok: false, message: "Error del servidor" });
+                    } else if (!check) {
+                        res.status(404).send({ ok: false, message: "Error, la contraseña es incorrecta" });
                     } else {
                         if (!userStored.active) {
                             res.status(200).send({ ok: false, message: "Error, el usuario aun no está activado" });

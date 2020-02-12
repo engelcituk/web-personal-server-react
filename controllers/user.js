@@ -66,7 +66,6 @@ function singIn(req, res) {
                                 message: "Usuario encontrado",
                                 accessToken: jwt.createAccessToken(userStored),
                                 refreshToken: jwt.createRefresToken(userStored),
-
                             });
                         }
                     }

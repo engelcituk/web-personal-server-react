@@ -6,5 +6,7 @@ const api = express.Router();
 api.post("/sign-up", UserController.signUp);
 api.post("/sign-in", UserController.singIn);
 api.get("/users", [mdAuth.ensureAuth], UserController.getUsers);
+api.get("/users-active", [mdAuth.ensureAuth], UserController.getUsersActive);
+
 
 module.exports = api;

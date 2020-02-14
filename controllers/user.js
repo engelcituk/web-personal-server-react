@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("../services/jwt")
 const User = require("../models/user");
+const fs = require("fs"); // file system
+const path = require("path");
 
 function signUp(req, res) {
     const user = new User();
@@ -108,7 +110,29 @@ function uploadAvatar(req, res) {
                 res.status(404).send({ ok: false, message: "Usuario no encontrado" });
             } else {
                 let user = usuarioDB;
-                console.log(user);
+                if (req.files) {
+                    let filePath = req.files.avatar.path;
+                    let fileSplit = filePath.split("/"); //se le quita los diagonales al path
+                    let fileName = fileSplit[2]; // Se obtiene el nombre copleto de la img en la ruta /uploads/avatar/kafkjaffd.jpg ->posicion 3, osea 2
+                    let extSplit = fileName.split("."); // el nombre de la img al hacerle split genera un array de dos posiciones
+                    let fileExt = extSplit[1]; // se toma la extension, que ocupa la posicion 2 o -> [1]
+                    if (fileExt !== "png" && fileExt !== "jpg") {
+                        res.status(404).send({ ok: false, message: "La extension de la imagen no es valida, se permiten: png y jpg" });
+                    } else {
+                        user.avatar = fileName;
+                        User.findByIdAndUpdate({ _id: params.id }, user, (err, userGuardado) => {
+                            if (err) {
+                                res.status(500).send({ ok: false, message: "Error del servidor" });
+                            } else {
+                                if (!userGuardado) {
+                                    res.status(404).send({ ok: false, message: "Usuario no encontrado para actualizar" });
+                                } else {
+                                    res.status(200).send({ ok: true, message: "Usuario actualizado", avatarName: fileName });
+                                }
+                            }
+                        })
+                    }
+                }
             }
         }
     })

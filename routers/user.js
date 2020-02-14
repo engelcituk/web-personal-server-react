@@ -13,6 +13,8 @@ api.post("/sign-in", UserController.singIn);
 api.get("/users", [mdAuth.ensureAuth], UserController.getUsers);
 api.get("/users-active", [mdAuth.ensureAuth], UserController.getUsersActive);
 api.put("/upload-avatar/:id", [mdAuth.ensureAuth, mdUploadAvatar], UserController.uploadAvatar);
+api.get("/get-avatar/:avatarName", UserController.getAvatar);
+
 
 
 

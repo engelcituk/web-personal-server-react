@@ -97,9 +97,27 @@ function getUsersActive(req, res) {
     });
 }
 
+function uploadAvatar(req, res) {
+    const params = req.params;
+
+    User.findById({ _id: params.id }, (err, usuarioDB) => {
+        if (err) {
+            res.status(404).send({ ok: false, message: "Error en el servidor" });
+        } else {
+            if (!usuarioDB) {
+                res.status(404).send({ ok: false, message: "Usuario no encontrado" });
+            } else {
+                let user = usuarioDB;
+                console.log(user);
+            }
+        }
+    })
+}
+
 module.exports = {
     signUp,
     singIn,
     getUsers,
-    getUsersActive
+    getUsersActive,
+    uploadAvatar
 };

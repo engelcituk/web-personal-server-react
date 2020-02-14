@@ -150,11 +150,31 @@ function getAvatar(req, res) {
         }
     })
 }
+
+function updateUser(req, res) {
+    const userData = req.body;
+    const params = req.params;
+
+    User.findByIdAndUpdate({ _id: params.id }, userData, (err, userActualizado) => {
+        if (err) {
+            res.status(500).send({ ok: false, message: "Error del servidor" });
+        } else {
+            if (!userActualizado) {
+                res.status(404).send({ ok: false, message: "El usuario a actualizar no existe" });
+            } else {
+                res.status(200).send({ ok: true, message: "Usuario actualizado", usuario: userActualizado });
+            }
+        }
+    })
+
+    console.log(userData);
+}
 module.exports = {
     signUp,
     singIn,
     getUsers,
     getUsersActive,
     uploadAvatar,
-    getAvatar
+    getAvatar,
+    updateUser
 };

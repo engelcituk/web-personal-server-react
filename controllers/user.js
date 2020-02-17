@@ -116,7 +116,7 @@ function uploadAvatar(req, res) {
                     let fileName = fileSplit[2]; // Se obtiene el nombre copleto de la img en la ruta /uploads/avatar/kafkjaffd.jpg ->posicion 3, osea 2
                     let extSplit = fileName.split("."); // el nombre de la img al hacerle split genera un array de dos posiciones
                     let fileExt = extSplit[1]; // se toma la extension, que ocupa la posicion 2 o -> [1]
-                    if (fileExt !== "png" && fileExt !== "jpg") {
+                    if (fileExt !== "png" && fileExt !== "jpg" && fileExt !== "jpeg") {
                         res.status(404).send({ ok: false, message: "La extension de la imagen no es valida, se permiten: png y jpg" });
                     } else {
                         user.avatar = fileName;

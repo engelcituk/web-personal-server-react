@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("../services/jwt")
-const User = require("../models/user");
+const User = require("../models/user"); //modelo
 const fs = require("fs"); // file system
 const path = require("path");
 
@@ -181,7 +181,26 @@ async function updateUser(req, res) {
     //console.log(userData);
 }
 
+function activateUser(req, res) {
+    const { id } = req.params;
+    const { active } = req.body;
 
+    User.findByIdAndUpdate(id, { active }, (err, userGuardado) => {
+        if (err) {
+            res.status(500).send({ ok: false, message: "Error del servidor" });
+        } else {
+            if (!userGuardado) {
+                res.status(404).send({ ok: false, message: "El usuario a activar no se ha encontrado" });
+            } else {
+                if (active === true) {
+                    res.status(200).send({ ok: true, message: "Usuario activado correctamente", usuario: userGuardado });
+                } else {
+                    res.status(200).send({ ok: true, message: "Usuario desactivado correctamente", usuario: userGuardado });
+                }
+            }
+        }
+    })
+}
 module.exports = {
     signUp,
     singIn,
@@ -189,5 +208,6 @@ module.exports = {
     getUsersActive,
     uploadAvatar,
     getAvatar,
-    updateUser
+    updateUser,
+    activateUser
 };

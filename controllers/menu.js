@@ -24,8 +24,23 @@ function addMenu(req, res) {
     })
 }
 
-
+function getMenus(req, res) {
+    Menu.find()
+        .sort({ order: "asc" })
+        .exec((err, menus) => {
+            if (err) {
+                res.status(500).send({ ok: false, message: "Error de servidor" })
+            } else {
+                if (!menus) {
+                    res.status(404).send({ ok: false, message: "No se ha encontrado ningun menú" });
+                } else {
+                    res.status(200).send({ ok: true, message: "Usuarios encontrados", menus });
+                }
+            }
+        });
+}
 
 module.exports = {
     addMenu,
+    getMenus
 };

@@ -50,9 +50,30 @@ function updateMenu(req, res) {
             res.status(500).send({ ok: false, message: "Error del servidor" })
         } else {
             if (!menuUpdate) {
-                res.status(404).send({ ok: false, message: "No se ha encontrado ningun menú" });
+                res.status(404).send({ ok: false, message: "No se ha encontrado el menú" });
             } else {
                 res.status(200).send({ ok: true, message: "Menú actualizado correctamente", menuUpdate });
+            }
+        }
+    });
+}
+
+function activateMenu(req, res) {
+    const { id } = req.params;
+    const { active } = req.body;
+
+    Menu.findByIdAndUpdate(id, { active }, (err, menuStored) => {
+        if (err) {
+            res.status(500).send({ ok: false, message: "Error del servidor" })
+        } else {
+            if (!menuStored) {
+                res.status(404).send({ ok: false, message: "No se ha encontrado el menú" });
+            } else {
+                if (active === true) {
+                    res.status(200).send({ ok: true, message: "Menú activado correctamente" });
+                } else {
+                    res.status(200).send({ ok: true, message: "Menú desactivado correctamente" });
+                }
             }
         }
     });
@@ -60,5 +81,6 @@ function updateMenu(req, res) {
 module.exports = {
     addMenu,
     getMenus,
-    updateMenu
+    updateMenu,
+    activateMenu
 };

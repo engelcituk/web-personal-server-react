@@ -40,7 +40,6 @@ function getMenus(req, res) {
         });
 }
 
-
 function updateMenu(req, res) {
     let menuData = req.body;
     const params = req.params;
@@ -78,9 +77,26 @@ function activateMenu(req, res) {
         }
     });
 }
+
+function deleteMenu(req, res) {
+    const { id } = req.params;
+
+    Menu.findByIdAndRemove(id, (err, menuBorrado) => {
+        if (err) {
+            res.status(500).send({ ok: false, message: "Error del servidor" });
+        } else {
+            if (!menuBorrado) {
+                res.status(404).send({ ok: false, message: "El menú a borrar no se ha encontrado" });
+            } else {
+                res.status(200).send({ ok: true, message: "Menú borrado correctamente" });
+            }
+        }
+    })
+}
 module.exports = {
     addMenu,
     getMenus,
     updateMenu,
-    activateMenu
+    activateMenu,
+    deleteMenu
 };

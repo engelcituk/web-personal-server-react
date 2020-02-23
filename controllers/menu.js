@@ -34,7 +34,7 @@ function getMenus(req, res) {
                 if (!menus) {
                     res.status(404).send({ ok: false, message: "No se ha encontrado ningun menú" });
                 } else {
-                    res.status(200).send({ ok: true, message: "Usuarios encontrados", menus });
+                    res.status(200).send({ ok: true, message: "Menús encontrados", menus });
                 }
             }
         });

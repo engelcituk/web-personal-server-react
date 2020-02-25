@@ -34,8 +34,24 @@ function getCourses(req, res) {
             }
         });
 }
+function deleteCourse(req, res) {
+    const { id } = req.params;
+
+    Course.findByIdAndRemove(id, (err, courseBorrado) => {
+        if (err) {
+            res.status(500).send({ ok: false, code:500, message: "Error del servidor" });
+        } else {
+            if (!courseBorrado) {
+                res.status(404).send({ ok: false, code:404, message: "El curso a borrar no se ha encontrado" });
+            } else {
+                res.status(200).send({ ok: true, code:200, message: "Curso borrado correctamente" });
+            }
+        }
+    })
+}
 
 module.exports = {
     addCourse,
-    getCourses
+    getCourses,
+    deleteCourse
 };

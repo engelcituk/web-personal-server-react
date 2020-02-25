@@ -7,7 +7,7 @@ const api = express.Router();
 
 api.post("/course", [mdAuth.ensureAuth], CourseController.addCourse); //add new course
 api.get("/course", CourseController.getCourses); //get all courses
-
+api.delete("/course/:id", [mdAuth.ensureAuth], CourseController.deleteCourse); //delete a course
 
 
 module.exports = api;

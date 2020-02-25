@@ -50,8 +50,26 @@ function deleteCourse(req, res) {
     })
 }
 
+function updateCourse(req, res) {
+    let courseData = req.body;
+    const { id } = req.params;
+
+    Course.findByIdAndUpdate(id, courseData, (err, cursoActualizado) => {
+        if (err) {
+            res.status(500).send({ ok: false, code:500, message: "Error del servidor" })
+        } else {
+            if (!cursoActualizado) {
+                res.status(404).send({ ok: false, code:404, message: "No se ha encontrado el menú" });
+            } else {
+                res.status(200).send({ ok: true, code:200, message: "Curso actualizado correctamente", cursoActualizado });
+            }
+        }
+    });
+}
+
 module.exports = {
     addCourse,
     getCourses,
-    deleteCourse
+    deleteCourse,
+    updateCourse
 };

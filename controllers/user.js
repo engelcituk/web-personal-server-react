@@ -177,8 +177,6 @@ async function updateUser(req, res) {
             }
         }
     })
-
-    //console.log(userData);
 }
 
 function activateUser(req, res) {

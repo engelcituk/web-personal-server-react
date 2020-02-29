@@ -60,26 +60,6 @@ function updatePost(req, res) {
     });
 }
 
-function activatePost(req, res) {
-    const { id } = req.params;
-    const { active } = req.body;
-
-    Post.findByIdAndUpdate(id, { active }, (err, postStored) => {
-        if (err) {
-            res.status(500).send({ ok: false, message: "Error del servidor" })
-        } else {
-            if (!postStored) {
-                res.status(404).send({ ok: false, message: "No se ha encontrado el post" });
-            } else {
-                if (active === true) {
-                    res.status(200).send({ ok: true, message: "Post activado correctamente" });
-                } else {
-                    res.status(200).send({ ok: true, message: "Post desactivado correctamente" });
-                }
-            }
-        }
-    });
-}
 
 function deletePost(req, res) {
     const { id } = req.params;
@@ -100,6 +80,6 @@ module.exports = {
     addPost,
     getPosts,
     updatePost,
-    activatePost,
+    
     deletePost
 };

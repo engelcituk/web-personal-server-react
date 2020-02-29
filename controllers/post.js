@@ -43,17 +43,18 @@ function getPosts(req, res) {
 }
 
 function updatePost(req, res) {
-    let postData = req.body;
-    const params = req.params;
 
-    Post.findByIdAndUpdate(params.id, postData, (err, postUpdate) => {
+    let postData = req.body;
+    const {id} = req.params;
+
+    Post.findByIdAndUpdate(id, postData, (err, postUpdate) => {
         if (err) {
-            res.status(500).send({ ok: false, message: "Error del servidor" })
+            res.status(500).send({ ok: false, code:500, message: "Error del servidor" })
         } else {
             if (!postUpdate) {
-                res.status(404).send({ ok: false, message: "No se ha encontrado el post" });
+                res.status(404).send({ ok: false,code:404,  message: "No se ha encontrado el post" });
             } else {
-                res.status(200).send({ ok: true, message: "Post actualizado correctamente", postUpdate });
+                res.status(200).send({ ok: true, code:200,  message: "Post actualizado correctamente", postUpdate });
             }
         }
     });

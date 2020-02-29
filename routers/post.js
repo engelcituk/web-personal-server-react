@@ -8,7 +8,6 @@ const api = express.Router();
 api.post("/post", [mdAuth.ensureAuth], PostController.addPost); //add new post
 api.get("/post", PostController.getPosts); //get posts
 api.put("/post/:id", [mdAuth.ensureAuth], PostController.updatePost); //update post
-api.put("/activate-post/:id", [mdAuth.ensureAuth], PostController.activatePost); //update post
 api.delete("/post/:id", [mdAuth.ensureAuth], PostController.deletePost); //update post
 
 

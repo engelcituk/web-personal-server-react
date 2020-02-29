@@ -21,19 +21,25 @@ function addPost(req, res) {
 }
 
 function getPosts(req, res) {
-    Post.find()
-        .sort({ order: "asc" })
-        .exec((err, posts) => {
-            if (err) {
-                res.status(500).send({ ok: false, message: "Error de servidor" })
+    const {page = 1, limit = 10}= req.query;
+
+    const options = {
+        page,
+        limit: parseInt(limit),
+        sort: { date: "desc"}
+    }
+
+    Post.paginate({},options, (err, posts)=> {
+        if (err) {
+            res.status(500).send({ ok: false, code:500, message: "Error de servidor" })
+        } else {
+            if (!posts) {
+                res.status(404).send({ ok: false, code:404, message: "No se ha encontrado ningun post" });
             } else {
-                if (!posts) {
-                    res.status(404).send({ ok: false, message: "No se ha encontrado ningun post" });
-                } else {
-                    res.status(200).send({ ok: true, message: "Posts encontrados", posts });
-                }
+                res.status(200).send({ ok: true, code:200, message: "Posts encontrados", posts });
             }
-        });
+        }
+    });
 }
 
 function updatePost(req, res) {

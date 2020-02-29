@@ -1,28 +1,23 @@
 const jwt = require("../services/jwt")
-const Post = require("../models/menu"); //modelo
+const Post = require("../models/post"); //modelo
 
 
 function addPost(req, res) {
-    console.log('todo funciona correcto')
-    /* const { title, url, order, active } = req.body;
-    const menu = new Post();
 
-    menu.title = title;
-    menu.url = url;
-    menu.order = order;
-    menu.active = active;
+    const body = req.body;
+    const post = new Post(body);
 
-    menu.save((err, menuCreado) => {
+    post.save((err, postCreado) => {
         if (err) {
-            res.status(500).send({ ok: false, message: "Error de servidor" })
+            res.status(500).send({ ok: false, code:500, message: "Error de servidor" })
         } else {
-            if (!menuCreado) {
-                res.status(404).send({ ok: false, message: "Error al crear el menú" })
+            if (!postCreado) {
+                res.status(404).send({ ok: false, code:404, message: "Error al crear el post" })
             } else {
-                res.status(200).send({ ok: true, message: "Menú creado correctamente", menu: menuCreado })
+                res.status(200).send({ ok: true, code:200, message: "Post creado correctamente", post: postCreado })
             }
         }
-    }) */
+    })
 }
 
 function getPosts(req, res) {
@@ -33,9 +28,9 @@ function getPosts(req, res) {
                 res.status(500).send({ ok: false, message: "Error de servidor" })
             } else {
                 if (!posts) {
-                    res.status(404).send({ ok: false, message: "No se ha encontrado ningun menú" });
+                    res.status(404).send({ ok: false, message: "No se ha encontrado ningun post" });
                 } else {
-                    res.status(200).send({ ok: true, message: "Menús encontrados", posts });
+                    res.status(200).send({ ok: true, message: "Posts encontrados", posts });
                 }
             }
         });
@@ -50,9 +45,9 @@ function updatePost(req, res) {
             res.status(500).send({ ok: false, message: "Error del servidor" })
         } else {
             if (!postUpdate) {
-                res.status(404).send({ ok: false, message: "No se ha encontrado el menú" });
+                res.status(404).send({ ok: false, message: "No se ha encontrado el post" });
             } else {
-                res.status(200).send({ ok: true, message: "Menú actualizado correctamente", postUpdate });
+                res.status(200).send({ ok: true, message: "Post actualizado correctamente", postUpdate });
             }
         }
     });
@@ -67,12 +62,12 @@ function activatePost(req, res) {
             res.status(500).send({ ok: false, message: "Error del servidor" })
         } else {
             if (!postStored) {
-                res.status(404).send({ ok: false, message: "No se ha encontrado el menú" });
+                res.status(404).send({ ok: false, message: "No se ha encontrado el post" });
             } else {
                 if (active === true) {
-                    res.status(200).send({ ok: true, message: "Menú activado correctamente" });
+                    res.status(200).send({ ok: true, message: "Post activado correctamente" });
                 } else {
-                    res.status(200).send({ ok: true, message: "Menú desactivado correctamente" });
+                    res.status(200).send({ ok: true, message: "Post desactivado correctamente" });
                 }
             }
         }
@@ -87,9 +82,9 @@ function deletePost(req, res) {
             res.status(500).send({ ok: false, message: "Error del servidor" });
         } else {
             if (!postBorrado) {
-                res.status(404).send({ ok: false, message: "El menú a borrar no se ha encontrado" });
+                res.status(404).send({ ok: false, message: "El post a borrar no se ha encontrado" });
             } else {
-                res.status(200).send({ ok: true, message: "Menú borrado correctamente" });
+                res.status(200).send({ ok: true, message: "Post borrado correctamente" });
             }
         }
     })

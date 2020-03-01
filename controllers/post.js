@@ -41,6 +41,22 @@ function getPosts(req, res) {
         }
     });
 }
+function getPost(req, res) {
+    const {url}=req.params;
+    
+    // como lo obtenido desde destructuring es la misma variable no es necesario poner finone como url:urlname
+    Post.findOne({url}, (err, postStored) =>{
+        if (err) {
+            res.status(500).send({ ok: false, code:500, message: "Error del servidor" })
+        } else {
+            if (!postStored) {
+                res.status(404).send({ ok: false,code:404,  message: "No se ha encontrado el post" });
+            } else {
+                res.status(200).send({ ok: true, code:200,  message: "Post encontrado", postStored });
+            }
+        }
+    })
+}
 
 function updatePost(req, res) {
 
@@ -79,7 +95,7 @@ function deletePost(req, res) {
 module.exports = {
     addPost,
     getPosts,
+    getPost,
     updatePost,
-    
     deletePost
 };

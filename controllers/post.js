@@ -82,12 +82,12 @@ function deletePost(req, res) {
 
     Post.findByIdAndRemove(id, (err, postBorrado) => {
         if (err) {
-            res.status(500).send({ ok: false, message: "Error del servidor" });
+            res.status(500).send({ ok: false,  code:500,message: "Error del servidor" });
         } else {
             if (!postBorrado) {
-                res.status(404).send({ ok: false, message: "El post a borrar no se ha encontrado" });
+                res.status(404).send({ ok: false,code:404,  message: "El post a borrar no se ha encontrado" });
             } else {
-                res.status(200).send({ ok: true, message: "Post borrado correctamente" });
+                res.status(200).send({ ok: true, code:200,message: "Post borrado correctamente" });
             }
         }
     })

@@ -52,7 +52,7 @@ function getPost(req, res) {
             if (!postStored) {
                 res.status(404).send({ ok: false,code:404,  message: "No se ha encontrado el post" });
             } else {
-                res.status(200).send({ ok: true, code:200,  message: "Post encontrado", postStored });
+                res.status(200).send({ ok: true, code:200,  message: "Post encontrado", post: postStored });
             }
         }
     })

@@ -6,7 +6,10 @@ const { API_VERSION, IP_SERVER, PORT_DB } = require("./config");
 
 mongoose.set("useFindAndModify", false);
 
-mongoose.connect(`mongodb://${IP_SERVER}:${PORT_DB}/bdblogweb`, { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
+//
+//mongoose.connect(`mongodb://${IP_SERVER}:${PORT_DB}/bdblogweb`, { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
+    
+mongoose.connect(`mongodb+srv://citukcaamal:6zq4yOLVBQbTlDMo@webpersonalreact-lp2dv.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
     if (err) {
         throw err;
     } else {
